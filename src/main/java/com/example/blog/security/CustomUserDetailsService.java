@@ -1,5 +1,6 @@
 package com.example.blog.security;
 
+import com.example.blog.model.User;
 import com.example.blog.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,10 +19,9 @@ public class CustomUserDetailsService implements UserDetailsService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Nie znaleziono użytkownika"));
 
-        // Zwracamy obiekt UserDetails, którego użyje Spring Security
         return org.springframework.security.core.userdetails.User.builder()
                 .username(user.getUsername())
-                .password(user.getPassword()) // Tutaj musi być zahaszowane hasło!
+                .password(user.getPassword())
                 .roles("USER")
                 .build();
     }

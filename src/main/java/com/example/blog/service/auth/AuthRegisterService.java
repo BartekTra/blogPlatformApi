@@ -22,15 +22,17 @@ public class AuthRegisterService {
     @Transactional
     public RegisterResponse register(RegisterRequest request) {
         validateUserDoesNotExist(request);
-
-        User user = userMapper.toEntity(request);
-
-        return userMapper.toResponse(userRepository.save(user), jwtProvider.generateToken(request.getUsername()));
+        return userMapper.toResponse(
+                userRepository.save(
+                        userMapper.toEntity(request)),
+                jwtProvider.generateToken(request.getUsername()
+                )
+        );
     }
 
     private void validateUserDoesNotExist(RegisterRequest request){
         if (userRepository.findByUsername(request.getUsername()).isPresent()) {
-            throw new UserAlreadyExistsException("Użytkownik już istnieje");
+            throw new UserAlreadyExistsException("User already exists");
         }
 
         if (userRepository.existsByEmail(request.getEmail())) {
