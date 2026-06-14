@@ -9,8 +9,9 @@ import com.example.blog.repository.user.UserRepository;
 import com.example.blog.security.JwtProvider;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
+@Service
 @AllArgsConstructor
 public class AuthRegisterService {
 

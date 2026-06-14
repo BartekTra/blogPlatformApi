@@ -7,12 +7,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collections;
 
 @NoArgsConstructor
@@ -30,7 +28,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String header = request.getHeader("Authorization");
 
         if (header != null && header.startsWith("Bearer ")) {
+
             String token = header.substring(7);
+
+            try{
+
                 String username = jwtProvider.getUserFromToken(token);
 
                 if (username != null) {
@@ -39,6 +41,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                     SecurityContextHolder.getContext().setAuthentication(auth);
                 }
+            } catch (Exception ignored) {}
         }
 
         filterChain.doFilter(request, response);
