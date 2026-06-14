@@ -14,9 +14,25 @@ import java.util.Set;
 @Entity
 @Table(name= "posts")
 public class Post {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
+    private String title;
+
+    @Column(nullable = false)
+    private String content;
+
+    @Column()
+    private String[] category;
+
+    @Column()
+    private String[] tags;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(
@@ -25,17 +41,6 @@ public class Post {
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     private Set<User> likes = new HashSet<>();
-
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Comment> comments = new ArrayList<>();
-    
-    private String title;
-
-    private String content;
-
-    private String[] category;
-
-    private String[] tags;
 
     //comments
     public void addComment(Comment comment) {
@@ -60,6 +65,4 @@ public class Post {
     public void removeLike(User user) {
         this.likes.remove(user);
     }
-
-
 }
