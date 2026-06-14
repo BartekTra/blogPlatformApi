@@ -21,7 +21,7 @@ public class User {
     private String displayName;
 
     @Column(nullable = false)
-    private UserAge age;
+    private Integer age;
 
     @Column(nullable = false, unique = true)
     private String email;
