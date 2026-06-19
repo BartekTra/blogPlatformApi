@@ -50,8 +50,8 @@ class AuthLoginServiceTest {
 
         LoginResponse response = authLoginService.login(request);
 
-        assertNotNull(response, "Response nie powinien być nullem");
-        assertEquals(expectedToken, response.getToken(), "Token w odpowiedzi musi zgadzać się z wygenerowanym");
+        assertNotNull(response, "Response shouldnt be null");
+        assertEquals(expectedToken, response.getToken(), "token in response must be the same as generated one");
 
         verify(authenticationManager, times(1)).authenticate(any(UsernamePasswordAuthenticationToken.class));
         verify(jwtProvider, times(1)).generateToken("testUser");
@@ -64,14 +64,14 @@ class AuthLoginServiceTest {
         request.setPassword("wrongPassword");
 
         when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
-                .thenThrow(new BadCredentialsException("Nieprawidłowy login lub hasło"));
+                .thenThrow(new BadCredentialsException("wrong login or password"));
 
         BadCredentialsException exception = assertThrows(
                 BadCredentialsException.class,
                 () -> authLoginService.login(request)
         );
 
-        assertEquals("Nieprawidłowy login lub hasło", exception.getMessage());
+        assertEquals("wrong login or password", exception.getMessage());
 
         verify(authenticationManager, times(1)).authenticate(any(UsernamePasswordAuthenticationToken.class));
         verify(jwtProvider, never()).generateToken(anyString());

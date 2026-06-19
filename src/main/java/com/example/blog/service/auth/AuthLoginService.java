@@ -20,8 +20,7 @@ public class AuthLoginService {
     private final AuthenticationManager authenticationManager;
     private final JwtProvider jwtProvider;
 
-
-    @Transactional
+    @Transactional()
     public LoginResponse login(LoginRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())

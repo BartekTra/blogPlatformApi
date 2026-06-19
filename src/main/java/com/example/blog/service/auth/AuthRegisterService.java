@@ -31,12 +31,12 @@ public class AuthRegisterService {
     }
 
     private void validateUserDoesNotExist(RegisterRequest request){
-        if (userRepository.findByUsername(request.getUsername()).isPresent()) {
-            throw new UserAlreadyExistsException("User already exists");
+        if (userRepository.existsByUsername(request.getUsername())) {
+            throw new UserAlreadyExistsException("Username already exists");
         }
 
         if (userRepository.existsByEmail(request.getEmail())) {
-            throw new UserAlreadyExistsException("Email jest już w użyciu");
+            throw new UserAlreadyExistsException("Email already exists");
         }
     }
 }
