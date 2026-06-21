@@ -61,7 +61,7 @@ public class AuthRegisterServiceTest {
                 () -> authRegisterService.register(request)
         );
 
-        assertEquals("Username already exists", exception.getMessage());
+        assertEquals("error.auth.register.username_exists", exception.getMessage());
     }
 
     @Test
@@ -74,7 +74,7 @@ public class AuthRegisterServiceTest {
                 () -> authRegisterService.register(request)
         );
 
-        assertEquals("Email already exists", exception.getMessage());
+        assertEquals("error.auth.register.email_exists", exception.getMessage());
     }
 
     @Test

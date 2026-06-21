@@ -6,25 +6,26 @@ import lombok.Data;
 @Data
 public class RegisterRequest {
 
-    @NotBlank(message = "Username cannot be empty")
-    @Size(min = 3, max = 24, message = "Username must be between 3 and 24 characters")
+    @NotBlank(message = "{validation.username.notblank}")
+    @Size(min = 3, max = 24, message = "{validation.username.size}")
     private String username;
 
-    @NotBlank(message = "You must put some display name for your profile")
-    @Size(min = 3, max = 24, message = "Display name must be between 3 and 24 characters")
+    @NotBlank(message = "{validation.displayname.notblank}")
+    @Size(min = 3, max = 24, message = "{validation.displayname.size}")
     private String displayName;
 
-    @NotBlank(message = "You have to specify your age")
-    @Min(value = 13, message = "Dont use it child")
-    @Max(value = 140, message = "At least put something realistic here")
+    // Zmienione z @NotBlank na @NotNull dla typu Integer!
+    @NotNull(message = "{validation.age.notnull}")
+    @Min(value = 13, message = "{validation.age.min}")
+    @Max(value = 140, message = "{validation.age.max}")
     private Integer age;
 
-    @NotBlank(message = "Email is required")
-    @Email(message = "Invalid email format")
+    @NotBlank(message = "{validation.email.notblank}")
+    @Email(message = "{validation.email.invalid}")
     private String email;
 
-    @NotBlank(message = "Password cannot be empty")
-    @Size(min = 8, message = "Password must have at least 8 symbols")
+    @NotBlank(message = "{validation.password.notblank}")
+    @Size(min = 8, message = "{validation.password.size}")
     private String password;
-
+    
 }

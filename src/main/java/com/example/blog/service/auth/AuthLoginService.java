@@ -23,7 +23,7 @@ public class AuthLoginService {
     @Transactional()
     public LoginResponse login(LoginRequest request) {
         authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
+                new UsernamePasswordAuthenticationToken(request.getUsername(), passwordEncoder.encode(request.getPassword()))
         );
         return new LoginResponse(jwtProvider.generateToken(request.getUsername()));
     }
